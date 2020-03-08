@@ -1,0 +1,37 @@
+---
+# The explicit version to use when referring to the short name.
+tomcat_version7: 7.0.99
+tomcat_version8: 8.5.9
+tomcat_version9: 9.0.31
+
+# The location where to download Apache Tomcat from.
+tomcat_mirror: "https://archive.apache.org"
+
+# Some defaults.
+tomcat_name: tomcat
+tomcat_directory: /opt
+tomcat_version: 8
+tomcat_user: tomcat
+tomcat_group: tomcat
+tomcat_xms: 512M
+tomcat_xmx: 1024M
+tomcat_non_ssl_connector_port: 8080
+tomcat_ssl_connector_port: 8443
+tomcat_shutdown_port: 8005
+tomcat_ajp_port: 8009
+tomcat_jre_home: /usr
+
+tomcat_instances:
+  - name: "{{ tomcat_name }}"
+    version: "{{ tomcat_version }}"
+    user: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    xms: "{{ tomcat_xms }}"
+    xmx: "{{ tomcat_xmx }}"
+    non_ssl_connector_port: "{{ tomcat_non_ssl_connector_port }}"
+    ssl_connector_port: "{{ tomcat_ssl_connector_port }}"
+    shutdown_port: "{{ tomcat_shutdown_port }}"
+    ajp_port: "{{ tomcat_ajp_port }}"
+    java_opts:
+      - name: JRE_HOME
+        value: "{{ tomcat_jre_home }}"

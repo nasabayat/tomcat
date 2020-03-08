@@ -1,0 +1,30 @@
+job('tomcat-dsl'){
+  description('This will start one or more tomcat on the same machine')
+ 
+  parameters {
+     choiceParam('Tomcat Verion', ['9 (default)', '8', '7'])
+  }
+  
+ scm {
+       git {
+            remote {
+                github('nasabayat/Wirecard', 'https')
+            }
+        }
+  }
+  
+  steps {     
+        shell("""
+        #!/bin/bash
+        mv ./* ../../.ansible/roles/tomcat 
+        ansible-galaxy install robertdebock.service
+        wget https://raw.githubusercontent.com/nasabayat/Wirecard/master/tomcat-playbook.yml        
+        """)        
+
+        ansiblePlaybook('tomcat-playbook.yml') {
+            inventoryPath('/etc/ansible/hosts')
+            colorizedOutput(true)
+            additionalParameters('--vault-password-file $HOME/password.txt')                                    
+        }
+  }
+}

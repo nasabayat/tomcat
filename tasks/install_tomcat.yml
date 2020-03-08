@@ -1,0 +1,55 @@
+---
+#- name: Step 3 — Install Tomcat
+
+# - name: Download Tomcat
+#   get_url:
+#     url: https://downloads.apache.org/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz
+#     dest: /tmp
+#     owner: vagrant
+#     group: vagrant
+
+# - name: Extract downloaded file
+#   unarchive:
+#     src: /tmp/apache-tomcat-9.0.31.tar.gz
+#     dest: /opt/tomcat
+#     remote_src: yes
+#   #  group: tomcat
+#   #  owner: tomcat
+
+# - name: Change the ownership and group of extracted directory into tomcat
+#  # previoud module group & owner didn't work
+#   file:
+#     path: /opt/tomcat/apache-tomcat-9.0.31
+#     recurse: yes
+#     owner: tomcat
+#     group: tomcat
+# - name: Step 4 — Update Permissions
+#   file:
+#     path: /opt/tomcat/apache-tomcat-9.0.31/conf
+#     recurse: yes
+#     mode: g=r
+# - name: Change conf directory Permission
+#   file: 
+#     path: /opt/tomcat/apache-tomcat-9.0.31/conf    
+#     mode: g=x
+
+- name: Step 5 — Create a systemd Service File
+  shell: /usr/sbin/update-java-alternatives -l | awk '{print $3}'
+  register: java_version
+#- debug: msg="{{java_version.stdout}}"
+
+- name: configure systemd service
+  template:
+    src: "tomcat.service.j2"
+    #dest: "/etc/systemd/system/{{ item.name }}.service"
+    dest: "/etc/systemd/system/{{ service_list }}.service"
+    #dest: "/etc/systemd/system/tomcat.service"
+  when:
+    - ansible_service_mgr == "systemd"
+  notify:
+    - systemctl daemon-reload
+  #loop: "{{ service_list }}"
+  #loop_control:
+   # label: "{{ item.name }}"
+
+

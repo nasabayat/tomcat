@@ -1,0 +1,14 @@
+---
+# tasks file for .
+- include_tasks: java_installation.yml
+#- include_tasks: create_tomcat_user.yml
+#- include_tasks: install_tomcat.yml
+
+# tasks file for tomcat
+- name: loop over tomcat_instances
+  include: instance.yml
+  loop: "{{ tomcat_instances }}"
+  loop_control:
+    loop_var: instance
+  when:
+    - tomcat_instances is defined
