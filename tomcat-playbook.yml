@@ -4,39 +4,40 @@
   become: yes
   gather_facts: yes
   remote_user: vagrant
-  
-  # vars:
-  #   tomcat_instances:
-  #     - name: "tomcat-version-9"
-  #       version: 8
-  #       shutdown_port: 8019
-  #       non_ssl_connector_port: 8084
-  #       ssl_connector_port: 8447
-  #       ajp_port: 8013
+        
+ 
+  vars:
+    tomcat_instances:
+      # - name: "tomcat-version-9"
+      #   version: 8
+      #   shutdown_port: 8019
+      #   non_ssl_connector_port: 8084
+      #   ssl_connector_port: 8447
+      #   ajp_port: 8013
 
-  #     - name: "tomcat-version-8"
-  #       version: 8
-  #       shutdown_port: 8018
-  #       non_ssl_connector_port: 8083
-  #       ssl_connector_port: 8446
-  #       ajp_port: 8012
+      - name: "tomcat-version-8"
+        version: 8
+        shutdown_port: 8018
+        non_ssl_connector_port: 8083
+        ssl_connector_port: 8446
+        ajp_port: 8012
 
-  #     - name: "tomcat-version-7"
-  #       version: 7
-  #       shutdown_port: 8017
-  #       non_ssl_connector_port: 8082
-  #       ssl_connector_port: 8445
-  #       ajp_port: 8011
+      - name: "tomcat-version-7"
+        version: 7
+        shutdown_port: 8017
+        non_ssl_connector_port: 8082
+        ssl_connector_port: 8445
+        ajp_port: 8011
 
   roles:
     - role: tomcat
-      tomcat_instances:
-        - name: "tomcat-version-7"
-          version: 7
-          shutdown_port: 8019
-          non_ssl_connector_port: 8084
-          ssl_connector_port: 8447
-          ajp_port: 8013
+      # tomcat_instances:
+      #   - name: "tomcat-version-9"
+      #     version: 9
+      #     shutdown_port: 8019
+      #     non_ssl_connector_port: 8084
+      #     ssl_connector_port: 8447
+      #     ajp_port: 8013
 
         # - name: "tomcat-version-8"
         #   version: 8

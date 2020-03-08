@@ -25,8 +25,10 @@
     dest: "{{ tomcat_directory }}/{{ instance.name }}/tomcat_src.tar.gz"
     mode: 0440
   register: tomcat_download_tomcat_source
-  until: tomcat_download_tomcat_source is succeeded
-  retries: 3
+  # until: tomcat_download_tomcat_source is succeeded
+  # retries: 3
+- debug: 
+    var: tomcat_download_tomcat_source
 
 - name: install tomcat instance
   unarchive:
@@ -52,14 +54,14 @@
   notify:
     - restart tomcat instance
 
-- name: configure tomcat instance - setenv.sh
-  template:
-    src: setenv.sh.j2
-    dest: "{{ tomcat_directory }}/{{ instance.name }}/bin/setenv.sh"
-  when:
-    - (instance.java_opts is defined) or (instance.xms is defined) or (instance.xmx is defined)
-  notify:
-    - restart tomcat instance
+# - name: configure tomcat instance - setenv.sh
+#   template:
+#     src: setenv.sh.j2
+#     dest: "{{ tomcat_directory }}/{{ instance.name }}/bin/setenv.sh"
+#   when:
+#     - (instance.xms is defined) or (instance.xmx is defined)
+#   notify:
+#     - restart tomcat instance
 
 - name: create service instance
   import_role:
